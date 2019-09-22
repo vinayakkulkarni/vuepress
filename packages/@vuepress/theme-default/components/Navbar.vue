@@ -31,6 +31,7 @@
         :options="algolia"
       />
       <SearchBox v-else-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false"/>
+      <ThemeSwitcher :theme-dark="themeDark" @theme-toggled="$emit('toggle-theme', $event)"/>
       <NavLinks class="can-hide"/>
     </div>
   </header>
@@ -41,9 +42,10 @@ import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SearchBox from '@SearchBox'
 import SidebarButton from '@theme/components/SidebarButton.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
+import ThemeSwitcher from '@theme/components/ThemeSwitcher.vue'
 
 export default {
-  components: { SidebarButton, NavLinks, SearchBox, AlgoliaSearchBox },
+  components: { SidebarButton, NavLinks, SearchBox, AlgoliaSearchBox, ThemeSwitcher },
 
   data () {
     return {
