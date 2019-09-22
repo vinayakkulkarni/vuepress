@@ -7,6 +7,8 @@
   >
     <Navbar
       v-if="shouldShowNavbar"
+      :theme-dark="themeDark"
+      @toggle-theme="dark => themeDark = dark"
       @toggle-sidebar="toggleSidebar"
     />
 
@@ -59,7 +61,8 @@ export default {
 
   data () {
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      themeDark: false
     }
   },
 
@@ -103,6 +106,7 @@ export default {
       const userPageClass = this.$page.frontmatter.pageClass
       return [
         {
+          'theme-dark': this.themeDark,
           'no-navbar': !this.shouldShowNavbar,
           'sidebar-open': this.isSidebarOpen,
           'no-sidebar': !this.shouldShowSidebar
