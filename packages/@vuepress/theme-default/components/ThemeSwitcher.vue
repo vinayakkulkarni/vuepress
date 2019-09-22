@@ -38,6 +38,8 @@ export default {
   user-select: none;
 }
 .svg-container {
+  display: inline-block;
+  vertical-align: middle;
   cursor: pointer;
 }
 .svg {
