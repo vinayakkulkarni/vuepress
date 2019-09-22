@@ -47,6 +47,13 @@ import ThemeSwitcher from '@theme/components/ThemeSwitcher.vue'
 export default {
   components: { SidebarButton, NavLinks, SearchBox, AlgoliaSearchBox, ThemeSwitcher },
 
+  props: {
+    themeDark: {
+      type: Boolean,
+      required: true
+    }
+  },
+
   data () {
     return {
       linksWrapMaxWidth: null
