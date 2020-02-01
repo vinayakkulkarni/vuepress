@@ -10,6 +10,7 @@ const createClientConfig = require('../webpack/createClientConfig')
 const createServerConfig = require('../webpack/createServerConfig')
 const { createBundleRenderer } = require('vue-server-renderer')
 const { normalizeHeadTag, applyUserWebpackConfig } = require('../util/index')
+const { version } = require('../../../package')
 
 /**
  * Expose Build Process Class.
@@ -18,7 +19,6 @@ const { normalizeHeadTag, applyUserWebpackConfig } = require('../util/index')
 module.exports = class Build extends EventEmitter {
   constructor (context) {
     super()
-    process.env.NODE_ENV = 'production'
     this.context = context
     this.outDir = this.context.outDir
   }
@@ -148,7 +148,8 @@ module.exports = class Build extends EventEmitter {
       pageMeta,
       title: 'VuePress',
       lang: 'en',
-      description: ''
+      description: '',
+      version
     }
 
     let html

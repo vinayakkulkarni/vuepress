@@ -93,7 +93,7 @@ Specify locales for i18n support. For more details, see the guide on [Internatio
 - Type: `Function`
 - Default: `() => true`
 
-A function to control what files should have `<link rel="preload">` resource hints generated. See [shouldPrefetch](https://ssr.vuejs.org/api/#shouldprefetch).
+A function to control what files should have `<link rel="prefetch">` resource hints generated. See [shouldPrefetch](https://ssr.vuejs.org/api/#shouldprefetch).
 
 ### cache
 
@@ -131,24 +131,46 @@ module.exports = {
 }
 ```
 
+### patterns
+
+- Type: `Array`
+- Default: `['**/*.md', '**/*.vue']`
+
+Specify which pattern of files you want to be resolved.
+
 ## Styling
 
 ### palette.styl
 
-To apply simple color overrides to the styling of the [default preset](https://github.com/vuejs/vuepress/blob/master/packages/@vuepress/core/lib/client/style/config.styl) or define some color variables for using later, you can create a `.vuepress/styles/palette.styl` file.
+To apply simple overrides to the styling of the [default preset](https://github.com/vuejs/vuepress/blob/master/packages/@vuepress/core/lib/client/style/config.styl) or define some variables to use later, you can create a `.vuepress/styles/palette.styl` file.
 
-There are some color variables you can tweak:
+There are some predefined variables you can tweak:
 
 ``` stylus
-// showing default values
+// colors
 $accentColor = #3eaf7c
 $textColor = #2c3e50
 $borderColor = #eaecef
 $codeBgColor = #282c34
+$arrowBgColor = #ccc
+$badgeTipColor = #42b983
+$badgeWarningColor = darken(#ffe564, 35%)
+$badgeErrorColor = #DA5961
+
+// layout
+$navbarHeight = 3.6rem
+$sidebarWidth = 20rem
+$contentWidth = 740px
+$homePageWidth = 960px
+
+// responsive breakpoints
+$MQNarrow = 959px
+$MQMobile = 719px
+$MQMobileNarrow = 419px
 ```
 
 ::: danger Note
-You should ONLY write color variables in this file. Since `palette.styl` will be imported at the end of the root Stylus config file, as a config, several files will use it, so once you wrote styles here, your style would be duplicated by multiple times.
+You should ONLY define variables in this file. Since `palette.styl` will be imported at the end of the root Stylus config file, as a config, several files will use it, so once you wrote styles here, your style would be duplicated by multiple times.
 :::
 
 ### index.styl
@@ -292,6 +314,21 @@ module.exports = {
 ::: tip
 This option is also included in [Plugin API](../plugin/option-api.md#extendmarkdown).
 :::
+
+### markdown.extractHeaders
+
+- Type: `Array`
+- Default: `['h2', 'h3']`
+
+While preparing the page, headers are extracted from the Markdown file and stored in `this.$page.headers`. By default, VuePress will extract `h2` and `h3` elements for you. You can override the headers it pulls out in your `markdown` options.
+ 
+``` js
+module.exports = {
+  markdown: {
+    extractHeaders: [ 'h2', 'h3', 'h4' ]
+  }
+}
+```
 
 ## Build Pipeline
 

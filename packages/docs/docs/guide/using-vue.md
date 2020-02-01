@@ -26,6 +26,35 @@ export default {
 </script>
 ```
 
+If your module `export default` a Vue component, you can register it dynamically:
+
+```vue
+<template>
+  <component v-if="dynamicComponent" :is="dynamicComponent"></component>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      dynamicComponent: null
+    }
+  },
+
+  mounted () {
+    import('./lib-that-access-window-on-import').then(module => {
+      this.dynamicComponent = module.default
+    })
+  }
+}
+</script>
+```
+
+**Also see:**
+
+- [Vue.js > Dynamic Components](https://vuejs.org/v2/guide/components.html#Dynamic-Components)
+
+
 ## Templating
 
 ### Interpolation
@@ -203,7 +232,7 @@ It(<OutboundLink/>) is used to specify that this is an external link. In VuePres
 
 See [Browser API Access Restrictions](#browser-api-access-restrictions).
 
-### Content <Badge text="1.0.0+"/>
+### Content
 
 - **Props**:
 
@@ -225,12 +254,12 @@ Specify a specific slot for a specific page (.md) for rendering. This will be us
 - [Writing a theme > Content Outlet](../theme/writing-a-theme.md#content-outlet)
 
 
-### Badge <Badge text="beta" type="warn"/> <Badge text="0.10.1+"/> <Badge text="default theme"/>
+### Badge <Badge text="beta" type="warning"/> <Badge text="default theme"/>
 
 - **Props**:
 
   - `text` - string
-  - `type` - string, optional value: `"tip"|"warn"|"error"`, defaults to `"tip"`.
+  - `type` - string, optional value: `"tip"|"warning"|"error"`, defaults to `"tip"`.
   - `vertical` - string, optional value: `"top"|"middle"`, defaults to `"top"`.
 
 - **Usage**:
@@ -238,7 +267,7 @@ Specify a specific slot for a specific page (.md) for rendering. This will be us
 You can use this component in header to add some status for some API:
 
 ``` md
-### Badge <Badge text="beta" type="warn"/> <Badge text="0.10.1+"/> <Badge text="default theme"/>
+### Badge <Badge text="beta" type="warning"/> <Badge text="default theme"/>
 ```
 
 **Also see:**

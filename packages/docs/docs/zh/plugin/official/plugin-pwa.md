@@ -10,8 +10,8 @@ metaTitle: PWA 插件 | VuePress
 ## 安装
 
 ```bash
-yarn add -D @vuepress/plugin-pwa@next
-# OR npm install -D @vuepress/plugin-pwa@next
+yarn add -D @vuepress/plugin-pwa
+# OR npm install -D @vuepress/plugin-pwa
 ```
 
 ## 使用
@@ -46,7 +46,7 @@ module.exports = {
     ['meta', { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }],
     ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
   ],
-  ['@vuepress/pwa', {
+  plugins: ['@vuepress/pwa', {
       serviceWorker: true,
       updatePopup: true
   }],
@@ -214,9 +214,9 @@ module.exports = {
 
 ```vue
 <template>
-  <SWUpdatePopup>
+  <SWUpdatePopup v-slot="{ enabled, reload, message, buttonText }">
     <div
-      slot-scope="{ enabled, reload, message, buttonText }"
+      v-if="enabled"
       class="my-sw-update-popup">
       {{ message }}<br>
       <button @click="reload">{{ buttonText }}</button>

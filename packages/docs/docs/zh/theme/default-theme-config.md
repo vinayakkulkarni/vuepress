@@ -27,11 +27,26 @@ footer: MIT Licensed | Copyright © 2018-present Evan You
 ---
 ```
 
+你可以将相应的内容设置为 `null` 来禁用标题和副标题。
+
 任何 `YAML front matter` 之后额外的内容将会以普通的 markdown 被渲染，并插入到 `features` 的后面。
 
 ## 导航栏
 
 导航栏可能包含你的页面标题、[搜索框](#搜索框)、 [导航栏链接](#导航栏链接)、[多语言切换](../guide/i18n.md)、[仓库链接](#git-仓库和编辑链接)，它们均取决于你的配置。
+
+### 导航栏 Logo
+
+你可以通过 `themeConfig.logo` 增加导航栏 Logo ，Logo 可以被放置在[公共文件目录](../guide/assets.md#public-files)：
+
+``` js
+// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    logo: '/assets/img/logo.png',
+  }
+}
+```
 
 ### 导航栏链接
 
@@ -45,6 +60,21 @@ module.exports = {
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'External', link: 'https://google.com' },
+    ]
+  }
+}
+
+
+```
+外部链接 `<a>` 标签的特性将默认包含`target="_blank" rel="noopener noreferrer"`，你可以提供 `target` 与 `rel`，它们将被作为特性被增加到 `<a>` 标签上：
+
+``` js
+// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    nav: [
+      { text: 'External', link: 'https://google.com', target:'_self', rel:'' },
+      { text: 'Guide', link: '/guide/', target:'_blank' }
     ]
   }
 }
@@ -139,7 +169,7 @@ sidebarDepth: 2
 ---
 ```
 
-### 显示所有页面的标题链接 <Badge text="0.11.0+"/>
+### 显示所有页面的标题链接
 
 默认情况下，侧边栏只会显示由当前活动页面的标题（headers）组成的链接，你可以将 `themeConfig.displayAllHeaders` 设置为 `true` 来显示所有页面的标题链接：
 
@@ -200,7 +230,7 @@ module.exports = {
 一个侧边栏的子组配置同时支持 [sidebarDepth](#nested-header-links) 字段用于重写默认显示的侧边栏深度(`1`)。
 
 ::: tip
-  从 `1.0.0-alpha.36` 开始，嵌套的侧边栏分组 <Badge text="beta"/> 也是支持的，但嵌套深度应小于 3，否则在控制台会收到警告。
+  嵌套的侧边栏分组 <Badge text="beta"/> 也是支持的，但嵌套深度应小于 3，否则在控制台会收到警告。
 :::
 
 ### 多个侧边栏
@@ -372,7 +402,23 @@ module.exports = {
 
 ## 上 / 下一篇链接
 
-上一篇和下一篇文章的链接将会自动地根据当前页面的侧边栏的顺序来获取。你也可以使用 `YAML front matter` 来明确地重写或者禁用它：
+上一篇和下一篇文章的链接将会自动地根据当前页面的侧边栏的顺序来获取。
+
+你可以通过 `themeConfig.nextLinks` 和 `themeConfig.prevLinks` 来全局禁用它们：
+
+``` js
+// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    // 默认值是 true 。设置为 false 来禁用所有页面的 下一篇 链接
+    nextLinks: false,
+    // 默认值是 true 。设置为 false 来禁用所有页面的 上一篇 链接
+    prevLinks: false
+  }
+}
+```
+
+你也可以使用 `YAML front matter` 来明确地重写或者禁用它们：
 
 ``` yaml
 ---
@@ -417,6 +463,19 @@ module.exports = {
 ---
 editLink: false
 ---
+```
+
+## 页面滚动 <Badge text="1.2.0+" />
+
+你可以通过 `themeConfig.smoothScroll` 选项来启用页面滚动效果。
+
+``` js
+// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    smoothScroll: true
+  }
+}
 ```
 
 ## 自定义页面类

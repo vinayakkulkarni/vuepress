@@ -125,7 +125,7 @@ describe('Page', () => {
     test('should loop over sync enhancers', async () => {
       await page.enhance(enhancers)
 
-      return enhancers.map(enhancer => expect(enhancer.value).toBeCalled())
+      return enhancers.map(enhancer => expect(enhancer.value).toHaveBeenCalled())
     })
 
     test('should loop over sync and async enhancers', async () => {
@@ -135,21 +135,18 @@ describe('Page', () => {
       }]
       await page.enhance(mixedEnhancers)
 
-      return mixedEnhancers.map(enhancer => expect(enhancer.value).toBeCalled())
+      return mixedEnhancers.map(enhancer => expect(enhancer.value).toHaveBeenCalled())
     })
 
     test('should log when enhancing when failing', async () => {
       const error = { errorMessage: 'this is an error message' }
-      expect.assertions(1)
-      try {
-        await page.enhance([{
-          pluginName: 'error-plugin',
-          value: jest.fn().mockRejectedValue(error)
-        }])
-      } catch (e) {
-        expect(console.log).toBeCalledWith(error)
-      }
+
+      await expect(page.enhance([{
+        pluginName: 'error-plugin',
+        value: jest.fn().mockRejectedValue(error)
+      }])).rejects.toThrow()
+
+      expect(console.log).toHaveBeenCalledWith(error)
     })
   })
 })
-

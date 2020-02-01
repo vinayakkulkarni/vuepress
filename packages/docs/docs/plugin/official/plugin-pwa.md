@@ -10,8 +10,8 @@ metaTitle: PWA Plugin | VuePress
 ## Install
 
 ```bash
-yarn add -D @vuepress/plugin-pwa@next
-# OR npm install -D @vuepress/plugin-pwa@next
+yarn add -D @vuepress/plugin-pwa
+# OR npm install -D @vuepress/plugin-pwa
 ```
 
 ## Usage
@@ -46,10 +46,15 @@ module.exports = {
     ['meta', { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }],
     ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
   ],
-  ['@vuepress/pwa', {
-      serviceWorker: true,
-      updatePopup: true
-  }],
+  plugins: [
+    [
+      '@vuepress/pwa',
+      {
+        serviceWorker: true,
+        updatePopup: true
+      }
+    ]
+  ],
 }
 ```
 
@@ -214,9 +219,9 @@ First, you need to create a global component (e.g. `MySWUpdatePopup`) at `.vuepr
 
 ```vue
 <template>
-  <SWUpdatePopup>
+  <SWUpdatePopup v-slot="{ enabled, reload, message, buttonText }">
     <div
-      slot-scope="{ enabled, reload, message, buttonText }"
+      v-if="enabled"
       class="my-sw-update-popup">
       {{ message }}<br>
       <button @click="reload">{{ buttonText }}</button>
